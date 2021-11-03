@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import router from './router';
 
@@ -9,6 +9,10 @@ import router from './router';
 const app = express();
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
+app.use((req: Request, res: Response, next: NextFunction) => {
+  req.teacherName = 'dell';
+  next();
+})
 app.use(router);
 
 app.listen(7001, () => {

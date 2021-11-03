@@ -2,6 +2,12 @@ import { Router, Request, Response } from 'express';
 import Crowller from './crowller';
 import DellAnalyzer from './dellAnalyzer';
 
+interface RequestWithBody extends Request {
+  body: {
+    [key: string]: string | undefined // 泛匹配
+  }
+}
+
 const router = Router();
 router.get('/', (req: Request, res: Response) => {
   res.send(`
@@ -16,8 +22,8 @@ router.get('/', (req: Request, res: Response) => {
   `);
 })
 
-router.post('/getData', (req: Request, res: Response) => {
-  console.log('body=====', req.body)
+router.post('/getData', (req: RequestWithBody, res: Response) => {
+  const { password, username } = req.body
   if (req.body.password === '123') {
     const secret = 'secretKey';
     const url = `http://www.dell-lee.com/typescript/demo.html?secret=${secret}`;
@@ -25,7 +31,7 @@ router.post('/getData', (req: Request, res: Response) => {
     new Crowller(url, analyzer);
     res.send('getData Success!');
   } else {
-    res.send('password Error!');
+    res.send(`${req.teacherName} password Error!`);
   }
 });
 export default router;
