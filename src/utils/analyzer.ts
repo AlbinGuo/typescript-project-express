@@ -63,5 +63,5 @@ export default class DellAnalyzer implements Analyzer {
     return JSON.stringify(fileContent);
   }
 
-  private constructor() {}
+  private constructor() { }
 }
