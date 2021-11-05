@@ -11,7 +11,7 @@ interface BodyRequest extends Request {
   }
 }
 
-const checkLogin = (req: Request, res: Response, next: NextFunction) {
+const checkLogin = (req: Request, res: Response, next: NextFunction) => {
   const isLogin = req.session ? req.session.login : false;
   if (isLogin) {
     next();
