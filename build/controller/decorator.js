@@ -18,17 +18,14 @@ function controller(target) {
     }
 }
 exports.controller = controller;
-function get(path) {
-    return function (target, key) {
-        Reflect.defineMetadata('path', path, target, key);
-        Reflect.defineMetadata('method', 'get', target, key);
+function getRequestDecorator(type) {
+    return function (path) {
+        return function (target, key) {
+            Reflect.defineMetadata('path', path, target, key);
+            Reflect.defineMetadata('method', type, target, key);
+        };
     };
 }
-exports.get = get;
-function post(path) {
-    return function (target, key) {
-        Reflect.defineMetadata('path', path, target, key);
-        Reflect.defineMetadata('method', 'post', target, key);
-    };
-}
-exports.post = post;
+exports.get = getRequestDecorator('get');
+exports.post = getRequestDecorator('post');
+exports.put = getRequestDecorator('put');
