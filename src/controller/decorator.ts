@@ -1,5 +1,5 @@
-import { RequestHandler, Router } from 'express';
-export const router = Router();
+import { RequestHandler } from 'express';
+import router from '../router';
 
 enum Method {
   get = 'get',
