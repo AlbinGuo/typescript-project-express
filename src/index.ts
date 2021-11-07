@@ -1,28 +1,21 @@
-import express, { NextFunction, Request, Response } from 'express';
+import express from 'express';
 import bodyParser from 'body-parser';
-import router from './router';
 import cookieSession from 'cookie-session';
-
-// 问题1：express库的类型定义文件，.d.ts文件类型描述不准确
-// 问题2：当使用中间件的时候，对req和res做了修改之后，实际上类型并不能改变
-// 如： req.helloworld = '123'，但实际上 Request上并没有helloworld
+import './controller/LoginController';
+import { router } from './controller/decorator';
 
 const app = express();
-// parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(
   cookieSession({
     name: 'session',
-    keys: ['teacher guoguo'],
+    keys: ['teacher dell'],
     maxAge: 24 * 60 * 60 * 1000
   })
-)
-app.use((req: Request, res: Response, next: NextFunction) => {
-  req.teacherName = 'dell';
-  next();
-})
+);
+
 app.use(router);
 
-app.listen(7001, () => {
+app.listen(8088, () => {
   console.log('server is running');
 });

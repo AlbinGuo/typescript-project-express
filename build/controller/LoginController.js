@@ -11,25 +11,31 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 require("reflect-metadata");
 var decorator_1 = require("./decorator");
+var util_1 = require("../utils/util");
 var LoginController = /** @class */ (function () {
     function LoginController() {
     }
-    LoginController.prototype.login = function () { };
+    LoginController.prototype.logout = function (req, res) {
+        if (req.session) {
+            req.session.login = undefined;
+        }
+        res.json(util_1.getResponseData(true));
+    };
     LoginController.prototype.home = function (req, res) {
         var isLogin = req.session ? req.session.login : false;
         if (isLogin) {
-            res.send("\n      <html>\n        <body>\n          <a href=\"/getData\">\u722C\u53D6\u5185\u5BB9</a>\n          <a href=\"/showData\">\u663E\u793A\u5185\u5BB9</a>\n          <a href=\"/logout\">\u9000\u51FA</a>\n        </body>\n      </html>\n      ");
+            res.send("\n      <html>\n        <body>\n          <a href='/getData'>\u722C\u53D6\u5185\u5BB9</a>\n          <a href='/showData'>\u5C55\u793A\u5185\u5BB9</a>\n          <a href='/logout'>\u9000\u51FA</a>\n        </body>\n      </html>\n    ");
         }
         else {
-            res.send("\n      <html>\n        <body>\n          <form method='post' action='/login'>\n            <input placeholder='\u8BF7\u8F93\u5165\u5BC6\u7801' name='password' type='password'/>\n            <button>\u767B\u5F55</button>\n          </form>\n        </body>\n      </html>\n      ");
+            res.send("\n      <html>\n        <body>\n          <form method=\"post\" action=\"/login\">\n            <input type=\"password\" name=\"password\" />\n            <button>\u767B\u9646</button>\n          </form>\n        </body>\n      </html>\n    ");
         }
     };
     __decorate([
-        decorator_1.get('/login'),
+        decorator_1.get('/logout'),
         __metadata("design:type", Function),
-        __metadata("design:paramtypes", []),
+        __metadata("design:paramtypes", [Object, Object]),
         __metadata("design:returntype", void 0)
-    ], LoginController.prototype, "login", null);
+    ], LoginController.prototype, "logout", null);
     __decorate([
         decorator_1.get('/'),
         __metadata("design:type", Function),
